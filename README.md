@@ -1,7 +1,7 @@
 # 织梦字幕组飞书自动化上传脚本（Feishu-AutoUploader）
 
- ## 功能介绍
- 监控目标文件夹或手动上传文件至飞书云文档，并设定浏览权限。
+## 功能介绍
+ 监控目标文件夹或手动上传文件至飞书云文档，并设定浏览权限，提取分享链接。
  
 ## 使用说明
 ### 1.编辑config.ini。
@@ -19,7 +19,7 @@
 > | `client_id` | 飞书应用ID | `cli_xxxxxx` |
 > | `client_secret` | 飞书应用密钥 | `9GRTXGWTOhV...` |
 > 
-> `client_secret` 是敏感信息，请自行妥善保管，我们并没有对敏感信息进行加密，任何风险请自负。
+> `client_secret` 是敏感信息，请妥善保管，并浏览自述文档中的```关于安全性```我们并没有对敏感信息进行加密，你需要自己承担评估任何风险。
 > 
 > ### [Logging] 日志配置
 > 
@@ -51,12 +51,12 @@
 > 
 > | 配置项 | 可选值 | 默认值 | 说明 |
 > |--------|--------|--------|------|
-> | `external_access_entity` | `open`, `closed` | `closed` | 是否允许外部访问 |
-> | `security_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 查看权限 |
-> | `comment_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 评论权限 |
-> | `share_entity` | `anyone`, `only_owner` | `only_owner` | 分享权限 |
-> | `link_share_entity` | `anyone_readable`, `only_owner` | `only_owner` | 链接分享权限 |
-> | `copy_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 复制/下载权限 |
+> | `external_access_entity` | `open`, `closed` | `open` | 是否允许外部访问 |
+> | `security_entity` | `anyone_can_view`, `only_owner` | `anyone_can_view` | 查看权限 |
+> | `comment_entity` | `anyone_can_view`, `only_owner` | `anyone_can_view` | 评论权限 |
+> | `share_entity` | `anyone`, `only_owner` | `anyone` | 分享权限 |
+> | `link_share_entity` | `anyone_readable`, `only_owner` | `anyone_readable` | 链接分享权限 |
+> | `copy_entity` | `anyone_can_view`, `only_owner` | `anyone_can_view` | 复制/下载权限 |
 > 
 > ### 权限说明：
 > - `open`：允许企业外用户访问
@@ -72,6 +72,7 @@
 > | `base_url` | `https://xxx.feishu.cn/file/` | 是 | 文件分享基础URL |
 > 
 
+
 ### 2.运行方式
 
  默认打开使用自动模式，监视文件夹路径上传，你可按照提示输入```m```切换手动上传模式，并输入路径上传。
@@ -80,8 +81,10 @@
 
  如需结束，请直接关闭掉运行窗口。
 
+
 ### 3.关于安全性
-该程序会在以下位置储存并管理您的token及敏感信息，请妥善保管```tokens.json```、```config.ini```、```log```，我们不对有关程序和自述文件等有关项目文件做任何有效保证，请自行评估有可能存在的泄露和错误的风险。
+该程序会在以下位置储存并管理你的token信息，请妥善保管```tokens.json```、```config.ini```、```log```，我们不对有关程序和自述文件等任何有关项目文件做有效保证，请自行评估有可能存在的安全和错误的风险。
+
 
 ### 4.相关文档说明附录
 飞书开发平台```https://open.feishu.cn/app```。
