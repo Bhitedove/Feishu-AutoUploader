@@ -1,10 +1,10 @@
-# 织梦字幕组飞书自动化上传脚本（Feishu-AutoUploader）
+# 织梦字幕组飞书自动化上传脚本 （Feishu-AutoUploader）
 
 ## 功能介绍
- 监控目标文件夹或手动上传文件至飞书云文档，并设定浏览权限，提取分享链接。
+ 监控目标文件夹或手动上传文件至飞书云文档，并设定文档权限，提取分享链接。
  
 ## 使用说明
-### 1.编辑config.ini。
+### 1. 编辑config.ini。
  首次使用请先运行```"Feishu AutoUploader.exe"```生成```config.ini```文件。
  如无法生成请使用```Code```里的```config.ini```。
  
@@ -17,7 +17,7 @@
 > | `chunk_size` | 分片上传大小(字节) | `4194304` (4MB) |
 > | `debug_mode` | 是否启用调试模式 | `true`/`false` |
 > | `client_id` | 飞书应用ID | `cli_xxxxxx` |
-> | `client_secret` | 飞书应用密钥 | `9GRTXGWTOhV...` |
+> | `client_secret` | 飞书应用密钥 | `9GRTXGKKBV...` |
 > 
 > `client_secret` 是敏感信息，请妥善保管，并浏览自述文档中的```关于安全性```我们并没有对敏感信息进行加密，你需要自己承担评估任何风险。
 > 
@@ -59,8 +59,8 @@
 > | `copy_entity` | `anyone_can_view`, `only_owner` | `anyone_can_view` | 复制/下载权限 |
 > 
 > ### 权限说明：
-> - `open`：允许企业外用户访问
-> - `closed`：仅企业内成员可见
+> - `open`：允许组织外用户访问
+> - `closed`：仅组织内成员可见
 > - `anyone_can_view`：有权限的用户可查看
 > - `only_owner`：仅文件所有者有权限
 > - `anyone_readable`：通过链接可查看内容
@@ -73,7 +73,7 @@
 > 
 
 
-### 2.运行方式
+### 2. 运行方式
 
  默认打开使用自动模式，监视文件夹路径上传，你可按照提示输入```m```切换手动上传模式，并输入路径上传。
 
@@ -82,14 +82,16 @@
  如需结束，请直接关闭掉运行窗口。
 
 
-### 3.关于安全性
-该程序会在以下位置储存并管理你的token信息，请妥善保管```tokens.json```、```config.ini```、```log```，我们不对有关程序和自述文件等任何有关项目文件做有效保证，请自行评估有可能存在的安全和错误的风险。
+### 3. 关于安全性
+本程序会在以下位置储存并管理你的token信息，请妥善保管```tokens.json```、```config.ini```、```log```，我们不对有关程序和自述文件等任何有关项目文件做有效保证，请自行评估有可能存在的安全和错误的风险。
 
+### 4. 联动场景
+使用RSS订阅配合本程序完成自动化上传，以及更多由你创造的联动场景。
 
-### 4.相关文档说明附录
-飞书开发平台```https://open.feishu.cn/app```。
+### 5. 相关文档说明附录
+> 飞书开发平台```https://open.feishu.cn/app```。
 
-飞书开发文档```https://open.feishu.cn/document/home/index```。
+> 飞书开发文档```https://open.feishu.cn/document/home/index```。
 
 任何飞书的相关权限以及错误码等相关问题，你都可在飞书开发文档中找到。
 
