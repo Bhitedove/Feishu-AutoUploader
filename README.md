@@ -8,69 +8,69 @@
  首次使用请先运行```"Feishu AutoUploader.exe"```生成```config.ini```文件。
  如无法生成请使用```Code```里的```config.ini```。
  
- ### [Feishu] 飞书配置
- 
-| 参数 | 说明 | 示例值 |
-|------|------|-------|
-| `watch_path` | 监控上传的文件夹路径 | `E:\test` |
-| `token_file` | 存储access_token的文件 | `tokens.json` |
-| `chunk_size` | 分片上传大小(字节) | `4194304` (4MB) |
-| `debug_mode` | 是否启用调试模式 | `true`/`false` |
-| `client_id` | 飞书应用ID | `cli_xxxxxx` |
-| `client_secret` | 飞书应用密钥 | `9GRTXGWTOhV...` |
-
-> ⚠️ `client_secret` 是敏感信息，请自行妥善保管，我们并没有对敏感信息进行加密，任何风险请自负。
-
-### [Logging] 日志配置
-
-| 参数 | 说明 | 示例值 |
-|------|------|-------|
-| `enable_logging` | 启用日志记录 | `true` |
-| `log_file` | 主日志文件名 | `feishu_uploader.log` |
-| `debug_log` | 调试日志文件名 | `debug.log` |
-| `log_level` | 日志级别 | `INFO` |
-| `state_file` | 上传状态记录文件 | `upload_state.json` |
-
-日志级别选项：`DEBUG` > `INFO` > `WARNING` > `ERROR`
-
-### [Rename] 文件重命名规则
-匹配格式：```原始匹配正则=>替换表达式```。
-
-| 参数 | 说明 | 示例值 |
-|------|------|-------|
-| `enabled` | 开启自动化文件重命名 | `true` |
-
-```ini
-enabled = true
-rules = $$.*?$$=>; $.*?$=>; - (\d+)=> E\1
-```
-
-### 访问权限配置 ([Permissions])
-
-控制上传文件的访问权限设置：
-
-| 配置项 | 可选值 | 默认值 | 说明 |
-|--------|--------|--------|------|
-| `external_access_entity` | `open`, `closed` | `closed` | 是否允许外部访问 |
-| `security_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 查看权限 |
-| `comment_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 评论权限 |
-| `share_entity` | `anyone`, `only_owner` | `only_owner` | 分享权限 |
-| `link_share_entity` | `anyone_readable`, `only_owner` | `only_owner` | 链接分享权限 |
-| `copy_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 复制/下载权限 |
-
-### 权限说明：
-- `open`：允许企业外用户访问
-- `closed`：仅企业内成员可见
-- `anyone_can_view`：有权限的用户可查看
-- `only_owner`：仅文件所有者有权限
-- `anyone_readable`：通过链接可查看内容
-
-### 路径配置 ([Paths])
-
-| 配置项 | 示例 | 必填 | 说明 |
-|--------|------|------|------|
-| `base_url` | `https://xxx.feishu.cn/file/` | 是 | 文件分享基础URL |
-
+>  ### [Feishu] 飞书配置
+>  
+> | 参数 | 说明 | 示例值 |
+> |------|------|-------|
+> | `watch_path` | 监控上传的文件夹路径 | `E:\test` |
+> | `token_file` | 存储access_token的文件 | `tokens.json` |
+> | `chunk_size` | 分片上传大小(字节) | `4194304` (4MB) |
+> | `debug_mode` | 是否启用调试模式 | `true`/`false` |
+> | `client_id` | 飞书应用ID | `cli_xxxxxx` |
+> | `client_secret` | 飞书应用密钥 | `9GRTXGWTOhV...` |
+> 
+> `client_secret` 是敏感信息，请自行妥善保管，我们并没有对敏感信息进行加密，任何风险请自负。
+> 
+> ### [Logging] 日志配置
+> 
+> | 参数 | 说明 | 示例值 |
+> |------|------|-------|
+> | `enable_logging` | 启用日志记录 | `true` |
+> | `log_file` | 主日志文件名 | `feishu_uploader.log` |
+> | `debug_log` | 调试日志文件名 | `debug.log` |
+> | `log_level` | 日志级别 | `INFO` |
+> | `state_file` | 上传状态记录文件 | `upload_state.json` |
+> 
+> 日志级别选项：`DEBUG` > `INFO` > `WARNING` > `ERROR`
+> 
+> ### [Rename] 文件重命名规则
+> 匹配格式：```原始匹配正则=>替换表达式```。
+> 
+> | 参数 | 说明 | 示例值 |
+> |------|------|-------|
+> | `enabled` | 开启自动化文件重命名 | `true` |
+> 
+> ```ini
+> enabled = true
+> rules = \[.*?\]=>; \(.*?\)=>; - (\d+)=> E\1; ^(\d+)=> E\1; \s+=> 
+> ```
+> 
+> ### 访问权限配置 ([Permissions])
+> 
+> 控制上传文件的访问权限设置：
+> 
+> | 配置项 | 可选值 | 默认值 | 说明 |
+> |--------|--------|--------|------|
+> | `external_access_entity` | `open`, `closed` | `closed` | 是否允许外部访问 |
+> | `security_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 查看权限 |
+> | `comment_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 评论权限 |
+> | `share_entity` | `anyone`, `only_owner` | `only_owner` | 分享权限 |
+> | `link_share_entity` | `anyone_readable`, `only_owner` | `only_owner` | 链接分享权限 |
+> | `copy_entity` | `anyone_can_view`, `only_owner` | `only_owner` | 复制/下载权限 |
+> 
+> ### 权限说明：
+> - `open`：允许企业外用户访问
+> - `closed`：仅企业内成员可见
+> - `anyone_can_view`：有权限的用户可查看
+> - `only_owner`：仅文件所有者有权限
+> - `anyone_readable`：通过链接可查看内容
+> 
+> ### 路径配置 ([Paths])
+> 
+> | 配置项 | 示例 | 必填 | 说明 |
+> |--------|------|------|------|
+> | `base_url` | `https://xxx.feishu.cn/file/` | 是 | 文件分享基础URL |
+> 
 
 ### 2.运行方式
 
