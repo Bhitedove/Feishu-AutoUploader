@@ -12,7 +12,7 @@
 >  
 > | 参数 | 说明 | 示例值 |
 > |------|------|-------|
-> | `watch_path` | 监控上传的文件夹路径 | `E:\test` |
+> | `watch_path` | 监控上传的文件夹路径 | `E:\Yumezukuri` |
 > | `token_file` | 存储access_token的文件 | `tokens.json` |
 > | `chunk_size` | 分片上传大小(字节) | `4194304` (4MB) |
 > | `debug_mode` | 是否启用调试模式 | `true`/`false` |
