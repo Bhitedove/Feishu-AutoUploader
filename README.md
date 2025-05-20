@@ -45,7 +45,7 @@
 > rules = \[.*?\]=>; \(.*?\)=>; - (\d+)=> E\1; ^(\d+)=> E\1; \s+=> 
 > ```
 > 
-> ### 访问权限配置 ([Permissions])
+> ### [Permissions] 访问权限配置
 > 
 > 控制上传文件的访问权限设置：
 > 
@@ -65,11 +65,11 @@
 > - `only_owner`：仅文件所有者有权限
 > - `anyone_readable`：通过链接可查看内容
 > 
-> ### 路径配置 ([Paths])
+> ### [Paths] 外部路径配置
 > 
 > | 配置项 | 示例 | 必填 | 说明 |
 > |--------|------|------|------|
-> | `base_url` | `https://xxx.feishu.cn/file/` | 是 | 文件分享基础URL |
+> | `base_url` | `https://[your-domain].feishu.cn/file/` | 是 | 文件分享基础URL |
 > 
 
 
