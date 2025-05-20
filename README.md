@@ -6,6 +6,7 @@
 ## 使用说明
 ### 1.编辑config.ini。
  首次使用请先运行```"Feishu AutoUploader.exe"```生成```config.ini```文件。
+ 如无法生成请使用```Code```里的```config.ini```。
  
  ## [Feishu] 飞书配置
  
