@@ -20,7 +20,7 @@
 > | `client_secret` | 飞书应用密钥 | `9GRTXGKKBV...` |
 > 
 > **`client` 相关为敏感信息，请妥善保管，并浏览自述文档中的```「关于安全性」```章节。  
-> 我们并没有对敏感信息进行加密，  你需要自己承担评估任何风险。**
+> 我们并没有对敏感信息进行加密，你需要自己承担评估任何风险。**
 > 
 > ### [Logging] 日志配置
 > 
@@ -59,9 +59,9 @@
 > | `link_share_entity` | `anyone_readable`, `only_owner` | `anyone_readable` | 链接分享权限 |
 > | `copy_entity` | `anyone_can_view`, `only_owner` | `anyone_can_view` | 复制/下载权限 |
 > | `enable_ownership_transfer` | `true`, `false` | `true` | 是否启用所有权转移功能 |
->| `enable_collaborator` | `true`, `false` | `false` | 是否添加协作者 |
->| `collaborator_id` | 飞书用户ID | user_id | 协作者的用户ID |
->| `new_owner_id` | 飞书用户ID | user_id | 新所有者的用户ID |
+>| `enable_collaborator` | `true`, `false` | `false` | 是否启用添加协作者功能 |
+>| `collaborator_id` | user_id | user_id | 协作者的用户ID |
+>| `new_owner_id` | user_id | user_id | 新所有者的用户ID |
 >| `transfer_ownership` | `true`, `false` | `true` | 是否执行所有权转移 |
 >| `need_notification` | `true`, `false` | `true` | 转移时是否通知原所有者 |
 >| `remove_old_owner` | `true`, `false` | `true` | 是否移除原所有者权限 |
@@ -73,7 +73,7 @@
 > - `anyone_can_view`：有权限的用户可查看
 > - `only_owner`：仅文件所有者有权限
 > - `anyone_readable`：通过链接可查看内容
-> - `user_id`：关于`user_id`的获取请浏览`相关文档说明附录`的章节
+> - `user_id`：关于`user_id`的获取请浏览[「关于安全性」](#3-关于安全性)的章节
 > 
 > ### [Paths] 外部路径配置
 > 
@@ -101,11 +101,11 @@
 使用RSS订阅配合本程序完成自动化上传，以及更多由你创造的联动场景。
 
 ### 5. 相关文档说明附录
-> 飞书开发平台```[https://open.feishu.cn/app](https://open.feishu.cn/app)```。
+> 飞书开发平台```https://open.feishu.cn/app```。
 
-> 飞书开发文档```[https://open.feishu.cn/document/home/index](https://open.feishu.cn/document/home/index)```。
+> 飞书开发文档```https://open.feishu.cn/document/home/index```。
 
-> 获取你的user_id```[https://open.feishu.cn/document/home/index](https://open.feishu.cn/document/server-docs/contact-v3/user/get)```。
+> 获取你的user_id```https://open.feishu.cn/document/home/index```。
 
 任何飞书的相关权限以及错误码等相关问题，你都可在飞书开发文档中找到。
 
