@@ -1,7 +1,7 @@
 # 织梦字幕组飞书自动化上传脚本（Feishu-AutoUploader）
 
 ## 功能介绍
- 监控目标文件夹或手动上传文件至飞书云文档，并设定文档权限，提取分享链接。
+ 监控目标文件夹或手动上传文件至飞书云文档，并设定文档权限，提取分享链接，并可添加协作者和转移所有权限。
  
 ## 使用说明
 ### 1. 编辑config.ini。
@@ -43,7 +43,7 @@
 > 
 > ```ini
 > enabled = true
-> rules = \[.*?\]=>; \(.*?\)=>; - (\d+)=> E\1; ^(\d+)=> E\1; \s+=> 
+> rules = \[.*?\]=>; \(.*?\)=>; - (\d+)=> E\1; ^(\d+)=> E\1
 > ```
 > 
 > ### [Permissions] 访问权限配置
@@ -101,11 +101,11 @@
 使用RSS订阅配合本程序完成自动化上传，以及更多由你创造的联动场景。
 
 ### 5. 相关文档说明附录
-> 飞书开发平台```https://open.feishu.cn/app```。
-
-> 飞书开发文档```https://open.feishu.cn/document/home/index```。
-
-> 获取你的user_id```https://open.feishu.cn/document/home/index```。
+> [飞书开发平台](https://open.feishu.cn/app)
+> 
+> [飞书开发文档](https://open.feishu.cn/document/home/index)
+> 
+> [获取你的user_id](https://open.feishu.cn/document/home/user-identity-introduction/how-to-get)
 
 任何飞书的相关权限以及错误码等相关问题，你都可在飞书开发文档中找到。
 
