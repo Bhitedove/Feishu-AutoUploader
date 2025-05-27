@@ -365,12 +365,13 @@ def setup_logging(config):
 
 def manual_upload_prompt(tracker):
     logger = logging.getLogger('ManualUpload') 
-    print(" \n [手动模式] 请输入文件路径，支持直接拖入文件后回车。输入空行退出。")
+    print(" \n [手动模式] 请输入文件路径，支持直接拖入文件后回车。输入空行切换自动模式。")
     while True:
         try:
             filepath = input(" 文件路径 > ").strip().strip('"').strip("'")
             if not filepath:
-                print(" 退出手动上传模式。")
+                print(" 退出手动模式。")
+                print(f"\n\033[1;32m • 已切换自动模式 正在监视文件夹中…\033[0m\n")
                 break
             if not os.path.isfile(filepath):
                 logger.error(f" 文件不存在: {filepath}") 
