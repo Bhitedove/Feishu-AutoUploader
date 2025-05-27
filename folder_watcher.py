@@ -145,7 +145,7 @@ class UploadTracker:
             logging.warning("状态文件格式错误，将重置")
             return set()
         except Exception as e:
-            logging.warning(f" 状态加载失败: {str(e)}")
+            logging.warning(f"  状态加载失败: {str(e)}")
             return set()
 
     def save_uploaded(self, filepath):
@@ -165,7 +165,7 @@ class UploadTracker:
                 else:
                     os.replace(temp_file, self.state_file)
             except Exception as e:
-                logging.error(f" 状态保存失败: {str(e)}")
+                logging.error(f"状态保存失败: {str(e)}")
 
     def is_uploaded(self, filepath):
         try:
@@ -178,13 +178,13 @@ class UploadTracker:
             return False
         
         except PermissionError as e:
-            logging.error(f" 权限拒绝访问文件: {filepath}")
+            logging.error(f"权限拒绝访问文件: {filepath}")
             return False
         except OSError as e:
-            logging.error(f" 系统级文件访问错误: {str(e)}")
+            logging.error(f"系统级文件访问错误: {str(e)}")
             return False
         except Exception as e:
-            logging.warning(f" 文件校验跳过: {str(e)}", exc_info=True)
+            logging.warning(f"  文件校验跳过: {str(e)}", exc_info=True)
             return False
 
     def _get_file_hash(self, filepath):
@@ -195,9 +195,9 @@ class UploadTracker:
                     file_hash.update(chunk)
             return f" {file_hash.hexdigest()}_{os.path.basename(filepath)}"
         except PermissionError:
-            raise PermissionError(f" 无权限读取文件: {filepath}")
+            raise PermissionError(f"无权限读取文件: {filepath}")
         except Exception as e:
-            raise RuntimeError(f" 文件读取失败: {str(e)}")
+            raise RuntimeError(f"文件读取失败: {str(e)}")
 
 class FileHandler(FileSystemEventHandler):
     def __init__(self, config, tracker):
@@ -221,7 +221,7 @@ class FileHandler(FileSystemEventHandler):
                     replacement = parts[1].strip()
                     self.rename_rules.append((pattern, replacement))
                 else:
-                    self.logger.warning(f" 重命名规则格式错误，跳过规则: {rule}")
+                    self.logger.warning(f"  重命名规则格式错误，跳过规则: {rule}")
 
     def _clean_filename(self, filename):
         name, ext = os.path.splitext(filename)
@@ -229,7 +229,7 @@ class FileHandler(FileSystemEventHandler):
             try:
                 name = re.sub(pattern, replacement, name)
             except re.error as e:
-                self.logger.error(f" 重命名正则规则无效: pattern={pattern}, error={e}")
+                self.logger.error(f"重命名正则规则无效: pattern={pattern}, error={e}")
         return f" {name.strip()}{ext}"
 
     def _safe_rename(self, src, dst):
@@ -257,7 +257,7 @@ class FileHandler(FileSystemEventHandler):
                     self.logger.info(f"文件重命名: {basename} -> {new_basename}")
                     return new_path
             except Exception as e:
-                self.logger.error(f" 重命名失败: {str(e)}", exc_info=True)
+                self.logger.error(f"重命名失败: {str(e)}", exc_info=True)
         return filepath
 
     def on_created(self, event):
@@ -266,10 +266,10 @@ class FileHandler(FileSystemEventHandler):
                 filepath = event.src_path
                 filename = os.path.basename(filepath)
                 if not os.access(filepath, os.R_OK):
-                    self.logger.warning(f" 跳过无权限文件: {filename}")
+                    self.logger.warning(f"  跳过无权限文件: {filename}")
                     return
                 if not self._wait_for_file_stable(filepath):
-                    self.logger.warning(f" 文件未就绪: {filename}")
+                    self.logger.warning(f"  文件未就绪: {filename}")
                     return
                 filepath = self._rename_file(filepath)
                 filename = os.path.basename(filepath)
@@ -278,7 +278,7 @@ class FileHandler(FileSystemEventHandler):
                         self.logger.info(f"跳过已上传文件: {filename}")
                         return
                 except Exception as e:
-                    self.logger.warning(f" 上传状态检查跳过: {str(e)}", exc_info=True)
+                    self.logger.warning(f"  上传状态检查跳过: {str(e)}", exc_info=True)
                 self.logger.info(f"开始处理文件: {filename}")
                 success, output = self._run_upload(filepath)
                 self.logger.info(output) 
@@ -287,12 +287,12 @@ class FileHandler(FileSystemEventHandler):
                         self.tracker.save_uploaded(filepath)
                         self.logger.info(f"上传成功: {filename}") 
                     except Exception as e:
-                        print(f" [WARN] 状态保存失败: {str(e)}")
+                        print(f"   [WARN] 状态保存失败: {str(e)}")
                 else:
-                    self.logger.error(f" 上传失败: {filename}") 
+                    self.logger.error(f"上传失败: {filename}") 
             except Exception as e:
-                self.logger.error(f" 处理异常: {str(e)}", exc_info=True)
-                print(f" [ERROR] 处理失败: {str(e)}")
+                self.logger.error(f"处理异常: {str(e)}", exc_info=True)
+                print(f"   [ERROR] 处理失败: {str(e)}")
 
     def _wait_for_file_stable(self, filepath, max_checks=300, delay=2):
         last_size = -1
@@ -349,10 +349,10 @@ def setup_logging(config):
         backupCount=5,
         encoding='utf-8'
     )
-    main_handler.setFormatter(logging.Formatter(' [%(levelname)s] %(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
+    main_handler.setFormatter(logging.Formatter('   [%(levelname)s] %(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
 
     console_handler = logging.StreamHandler()
-    console_handler.setFormatter(logging.Formatter(' [%(levelname)s] %(message)s'))
+    console_handler.setFormatter(logging.Formatter('   [%(levelname)s] %(message)s'))
 
     logger = logging.getLogger()
     logger.setLevel(log_level)
@@ -365,16 +365,16 @@ def setup_logging(config):
 
 def manual_upload_prompt(tracker):
     logger = logging.getLogger('ManualUpload') 
-    print(" \n [手动模式] 请输入文件路径，支持直接拖入文件后回车。输入空行切换自动模式。")
+    print("\n   [手动模式] 请输入文件路径，支持直接拖入文件后回车。输入空行切换自动模式。")
     while True:
         try:
-            filepath = input(" 文件路径 > ").strip().strip('"').strip("'")
+            filepath = input("   文件路径 > ").strip().strip('"').strip("'")
             if not filepath:
-                print(" 退出手动模式。")
+                print("   退出手动模式。")
                 print(f"\n\033[1;32m • 已切换自动模式 正在监视文件夹中…\033[0m\n")
                 break
             if not os.path.isfile(filepath):
-                logger.error(f" 文件不存在: {filepath}") 
+                logger.error(f"文件不存在: {filepath}") 
                 continue
             filename = os.path.basename(filepath)
             if tracker.is_uploaded(filepath):
@@ -386,12 +386,12 @@ def manual_upload_prompt(tracker):
                 tracker.save_uploaded(filepath)
                 logger.info(f"上传成功: {filename}") 
             else:
-                logger.error(f" 上传失败: {filename}") 
+                logger.error(f"上传失败: {filename}") 
         except KeyboardInterrupt:
-            print(" \n用户终止手动上传模式。")
+            print("\n   用户终止手动上传模式。")
             break
         except Exception as e:
-            logger.error(f" 手动上传异常: {str(e)}") 
+            logger.error(f"手动上传异常: {str(e)}") 
 
 def main():
     if getattr(sys, 'frozen', False):
@@ -403,7 +403,7 @@ def main():
     try:
         config = merge_default_config()
     except Exception as e:
-        print(f" 配置文件初始化失败: {str(e)}")
+        print(f"   配置文件初始化失败: {str(e)}")
         sys.exit(1)
 
     print_banner()
@@ -417,7 +417,7 @@ def main():
         for filepath in sys.argv[1:]:
             logger.info(f"启动检测到文件参数: {filepath}，尝试上传...")
             if not os.path.isfile(filepath):
-                logger.error(f" 文件不存在或不是文件: {filepath}")
+                logger.error(f"文件不存在或不是文件: {filepath}")
                 continue
             if tracker.is_uploaded(filepath):
                 logger.info(f"文件已上传，跳过: {os.path.basename(filepath)}")
@@ -428,17 +428,17 @@ def main():
                     tracker.save_uploaded(filepath)
                     logger.info(f"启动上传成功: {os.path.basename(filepath)}") 
                 else:
-                    logger.error(f" 启动上传失败: {os.path.basename(filepath)}")
+                    logger.error(f"启动上传失败: {os.path.basename(filepath)}")
             except Exception as e:
-                logger.error(f" 启动上传异常: {str(e)}")
+                logger.error(f"启动上传异常: {str(e)}")
 
     event_handler = FileHandler(config, tracker)
     observer = Observer()
     observer.schedule(event_handler, watch_path, recursive=False)
     observer.start()
 
-    print(f" 监视目录: {watch_path}")
-    print(" 输入 'm' 进入手动上传模式，Ctrl+C 退出程序。")
+    print(f"   监视目录: {watch_path}")
+    print("   输入 'm' 进入手动上传模式，Ctrl+C 退出程序。")
 
     try:
         while True:
@@ -451,7 +451,7 @@ def main():
             else:
                 time.sleep(1)
     except KeyboardInterrupt:
-        print(" 退出程序。")
+        print("   退出程序。")
     finally:
         observer.stop()
         observer.join()
