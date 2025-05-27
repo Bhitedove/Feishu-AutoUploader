@@ -16,7 +16,7 @@ class FeishuUploader:
         self.config = configparser.ConfigParser()
         self.config.read(config_path, encoding='utf-8')
         self.debug_mode = self.config.getboolean('Feishu', 'debug_mode', fallback=False) 
-        self._setup_logging()
+        self.logger = logging.getLogger('FeishuUploader')
         self.session = requests.Session()
         self._init_parameters()
         self._load_or_refresh_token()
@@ -248,7 +248,7 @@ class FeishuUploader:
             if 'access_token' not in token_data or 'expire' not in token_data:
                 return False
             expire_time = token_data['expire']
-            return time.time() < (expire_time - 300) 
+            return time.time() < (expire_time - 600)
         except Exception:
             return False
 
@@ -263,7 +263,7 @@ class FeishuUploader:
             raise Exception(result.get("msg", "获取Token失败"))
         token_data = {
             "access_token": result["tenant_access_token"],
-            "expire": result["expire"]
+            "expire": int(time.time()) + result["expire"] 
         }
         with open(self.token_file, 'w') as f:
             json.dump(token_data, f, indent=2)
@@ -373,7 +373,7 @@ class FeishuUploader:
         chunk_size = prepare_result["data"].get("block_size", self.chunk_size)
         
         with open(file_path, "rb") as f, tqdm(
-            total=file_size, unit="B", unit_scale=True, desc="上传进度"
+            total=file_size, unit="B", unit_scale=True, desc=" 上传进度"
         ) as pbar:
             part_num = 0
             while chunk := f.read(chunk_size):
@@ -465,17 +465,17 @@ def main(filepath=None):
         with open("URL.txt", "a", encoding="utf-8") as f:
             f.write(f"【权限】：{result['permission']}\n")
             f.write(f"【{result['name']}】【视频】：{result['url']}\n")
-        print("上传成功！")
-        print(f"【权限】：{result['permission']}", end='')
+        print()
+        print(f"\033[38;2;144;238;144m【权限】：{result['permission']}\033[0m", end='')
         transfer_info = []
         if result.get('new_owner'):
-            transfer_info.append("所有权转移成功")
+            transfer_info.append("\033[38;2;144;238;144m所有权转移成功\033[0m")
         if result.get('collaborator'):
-            transfer_info.append("协作者添加成功")           
+            transfer_info.append("\033[38;2;144;238;144m协作者添加成功\033[0m")           
         if transfer_info:
             print(f" | {' | '.join(transfer_info)}", end='')
         print()
-        print(f"【{result['name']}】【视频】：{result['url']}\n")
+        print(f"\033[38;2;144;238;144m【{result['name']}】【视频】：{result['url']}\033[0m\n")
         return True
     except Exception as e:
         print(f"上传失败: {str(e)}")
