@@ -58,6 +58,14 @@
 > | `share_entity` | `anyone`, `only_owner` | `anyone` | 分享权限 |
 > | `link_share_entity` | `anyone_readable`, `only_owner` | `anyone_readable` | 链接分享权限 |
 > | `copy_entity` | `anyone_can_view`, `only_owner` | `anyone_can_view` | 复制/下载权限 |
+> | `enable_ownership_transfer` | `true`, `false` | `true` | 是否启用所有权转移功能 |
+>| `enable_collaborator` | `true`, `false` | `false` | 是否添加协作者 |
+>| `collaborator_id` | 飞书用户ID | user_id | 协作者的用户ID |
+>| `new_owner_id` | 飞书用户ID | user_id | 新所有者的用户ID |
+>| `transfer_ownership` | `true`, `false` | `true` | 是否执行所有权转移 |
+>| `need_notification` | `true`, `false` | `true` | 转移时是否通知原所有者 |
+>| `remove_old_owner` | `true`, `false` | `true` | 是否移除原所有者权限 |
+>| `stay_put` | `true`, `false` | `false` | 是否保留原所有者协作者身份 |
 > 
 > ### 权限说明：
 > - `open`：允许组织外用户访问
@@ -65,6 +73,7 @@
 > - `anyone_can_view`：有权限的用户可查看
 > - `only_owner`：仅文件所有者有权限
 > - `anyone_readable`：通过链接可查看内容
+> - `user_id`：关于`user_id`的获取请浏览`相关文档说明附录`的章节
 > 
 > ### [Paths] 外部路径配置
 > 
@@ -92,9 +101,11 @@
 使用RSS订阅配合本程序完成自动化上传，以及更多由你创造的联动场景。
 
 ### 5. 相关文档说明附录
-> 飞书开发平台```https://open.feishu.cn/app```。
+> 飞书开发平台```[https://open.feishu.cn/app](https://open.feishu.cn/app)```。
 
-> 飞书开发文档```https://open.feishu.cn/document/home/index```。
+> 飞书开发文档```[https://open.feishu.cn/document/home/index](https://open.feishu.cn/document/home/index)```。
+
+> 获取你的user_id```[https://open.feishu.cn/document/home/index](https://open.feishu.cn/document/server-docs/contact-v3/user/get)```。
 
 任何飞书的相关权限以及错误码等相关问题，你都可在飞书开发文档中找到。
 
@@ -106,6 +117,8 @@
     "tenant": [
       "bitable:app",
       "bitable:app:readonly",
+      "contact:contact.base:readonly",
+      "contact:user.employee_id:readonly",
       "drive:drive",
       "drive:drive.metadata:readonly",
       "drive:drive.search:readonly",
@@ -120,7 +133,9 @@
       "drive:file:readonly",
       "drive:file:upload",
       "drive:file:view_record:readonly",
-      "event:ip_list"
+      "event:ip_list",
+      "im:message",
+      "im:message:send_as_bot"
     ],
     "user": [
       "contact:user.employee_id:readonly",
