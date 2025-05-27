@@ -39,7 +39,7 @@ class FeishuUploader:
         debug_logger.setLevel(logging.DEBUG if debug_mode else logging.CRITICAL)
 
         formatter = logging.Formatter(
-            '[%(asctime)s] - %(levelname)s - %(message)s',
+            '   [%(asctime)s] - %(levelname)s - %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
 
@@ -60,7 +60,7 @@ class FeishuUploader:
 
     def _init_parameters(self):
         if not self.config.has_section('Feishu') or not self.config.has_section('Paths'):
-            raise ValueError("配置文件缺少必要节段")
+            raise ValueError("   配置文件缺少必要节段")
 
         self.chunk_size = self.config.getint('Feishu', 'chunk_size', fallback=4*1024*1024)
         self.base_url = self.config.get('Paths', 'base_url')
@@ -69,7 +69,7 @@ class FeishuUploader:
         self.client_id = self.config.get('Feishu', 'client_id')
         self.client_secret = self.config.get('Feishu', 'client_secret')
         if not self.client_id or not self.client_secret:
-            raise ValueError("client_id和client_secret必须配置")
+            raise ValueError("   client_id和client_secret必须配置")
 
         self.collaborator_id = self.config.get('Permissions', 'collaborator_id', fallback=None)
         self.collaborator_perm = self.config.get('Permissions', 'collaborator_perm', fallback='full_access')
@@ -236,7 +236,7 @@ class FeishuUploader:
                 if self.logger:
                     self.logger.error(f"Token加载失败: {str(e)}")
                 if attempt == max_retries - 1:
-                    raise Exception(f"无法获取有效Token: {str(e)}")
+                    raise Exception(f"   无法获取有效Token: {str(e)}")
                 time.sleep(2 ** attempt)
 
     def _is_token_valid(self):
@@ -260,7 +260,7 @@ class FeishuUploader:
         resp.raise_for_status()
         result = resp.json()
         if result.get("code") != 0:
-            raise Exception(result.get("msg", "获取Token失败"))
+            raise Exception(result.get("msg", "   获取Token失败"))
         token_data = {
             "access_token": result["tenant_access_token"],
             "expire": int(time.time()) + result["expire"] 
@@ -304,7 +304,7 @@ class FeishuUploader:
             if data.get("code") == 99991668:
                 self._refresh_token()
                 return self.get_root_folder_token()
-            raise Exception(f"获取根目录失败: {data.get('msg', '未知错误')}")
+            raise Exception(f"   获取根目录失败: {data.get('msg', '未知错误')}")
         except requests.HTTPError as e:
             if e.response.status_code == 401:
                 self._refresh_token()
@@ -329,7 +329,7 @@ class FeishuUploader:
             resp.raise_for_status()
             result = resp.json()
             if result.get("code") != 0:
-                raise Exception(f"权限设置失败: {result.get('msg', '未知错误')}")
+                raise Exception(f"   权限设置失败: {result.get('msg', '未知错误')}")
             return permission_data['external_access_entity']
         except requests.HTTPError as e:
             if e.response.status_code == 401:
@@ -343,14 +343,14 @@ class FeishuUploader:
 
     def upload(self, file_path):
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"文件不存在: {file_path}")
+            raise FileNotFoundError(f"   文件不存在: {file_path}")
         file_name = os.path.basename(file_path)
         file_size = os.path.getsize(file_path)
         if self.logger:
             self.logger.info(f"开始上传: {file_name} ({file_size/1024/1024:.2f}MB)")
         parent_node = self.get_root_folder_token()
         if not parent_node:
-            raise Exception("无法获取根目录token")
+            raise Exception("   无法获取根目录token")
 
         prepare_data = {
             "file_name": file_name,
@@ -373,7 +373,7 @@ class FeishuUploader:
         chunk_size = prepare_result["data"].get("block_size", self.chunk_size)
         
         with open(file_path, "rb") as f, tqdm(
-            total=file_size, unit="B", unit_scale=True, desc=" 上传进度"
+            total=file_size, unit="B", unit_scale=True, desc="   上传进度"
         ) as pbar:
             part_num = 0
             while chunk := f.read(chunk_size):
@@ -393,7 +393,7 @@ class FeishuUploader:
                         part_resp.raise_for_status()
                         part_result = part_resp.json()
                         if part_result.get("code") != 0:
-                            raise Exception(part_result.get("msg", "分片上传失败"))
+                            raise Exception(part_result.get("msg", "   分片上传失败"))
                         break
                     except requests.HTTPError as e:
                         if e.response.status_code == 401 and attempt < 2:
@@ -415,7 +415,7 @@ class FeishuUploader:
         finish_resp.raise_for_status()
         finish_result = finish_resp.json()
         if finish_result.get("code") != 0:
-            raise Exception(finish_result.get("msg", "完成上传失败"))
+            raise Exception(finish_result.get("msg", "   完成上传失败"))
         file_token = finish_result["data"]["file_token"]
 
         result = {
@@ -463,10 +463,11 @@ def main(filepath=None):
         file_path = filepath if filepath else (sys.argv[1] if len(sys.argv) > 1 else input("请输入文件路径：").strip('"'))
         result = uploader.upload(file_path)
         with open("URL.txt", "a", encoding="utf-8") as f:
-            f.write(f"【权限】：{result['permission']}\n")
+            f.write("\n") 
             f.write(f"【{result['name']}】【视频】：{result['url']}\n")
+            f.write("\n") 
         print()
-        print(f"\033[38;2;144;238;144m【权限】：{result['permission']}\033[0m", end='')
+        print(f"\033[38;2;144;238;144m  【权限】：{result['permission']}\033[0m", end='')
         transfer_info = []
         if result.get('new_owner'):
             transfer_info.append("\033[38;2;144;238;144m所有权转移成功\033[0m")
@@ -475,10 +476,10 @@ def main(filepath=None):
         if transfer_info:
             print(f" | {' | '.join(transfer_info)}", end='')
         print()
-        print(f"\033[38;2;144;238;144m【{result['name']}】【视频】：{result['url']}\033[0m\n")
+        print(f"\033[38;2;144;238;144m  【{result['name']}】【视频】：{result['url']}\033[0m\n")
         return True
     except Exception as e:
-        print(f"上传失败: {str(e)}")
+        print(f"   上传失败: {str(e)}")
         if __name__ == "__main__":
             sys.exit(1)
         return False
