@@ -63,7 +63,7 @@
 >| `collaborator_id` | user_id | user_id | 协作者的用户ID |
 >| `new_owner_id` | user_id | user_id | 新所有者的用户ID |
 >| `transfer_ownership` | `true`, `false` | `true` | 是否执行所有权转移 |
->| `need_notification` | `true`, `false` | `true` | 转移时是否通知原所有者 |
+>| `need_notification` | `true`, `false` | `true` | 转移后是否通知新所有者 |
 >| `remove_old_owner` | `true`, `false` | `true` | 是否移除原所有者权限 |
 >| `stay_put` | `true`, `false` | `false` | 是否保留原所有者协作者身份 |
 > 
@@ -79,7 +79,7 @@
 > 
 > | 配置项 | 示例 | 必填 | 说明 |
 > |--------|------|------|------|
-> | `base_url` | `https://[your-domain].feishu.cn/file/` | 是 | 文件分享基础URL |
+> | `base_url` | `https://[your_domain].feishu.cn/file/` | 是 | 文件分享基础URL |
 > 
 
 
